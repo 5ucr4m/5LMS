@@ -16,6 +16,7 @@ import { ImageForm } from "./_component/image-form";
 import { CategoryForm } from "./_component/category-form";
 import { PriceForm } from "./_component/price-form";
 import { AttachmentForm } from "./_component/attachment-form";
+import { ChaptersForm } from "./_component/chapters-form";
 
 async function CourseIdPage({ params }: { params: { courseId: string } }) {
   const { userId } = auth();
@@ -30,6 +31,11 @@ async function CourseIdPage({ params }: { params: { courseId: string } }) {
       id: courseId,
     },
     include: {
+      chapters: {
+        orderBy: {
+          position: "asc",
+        },
+      },
       attachments: {
         orderBy: {
           createdAt: "desc",
@@ -95,6 +101,7 @@ async function CourseIdPage({ params }: { params: { courseId: string } }) {
               <IconBadge icon={ListChecks} />
               <h2 className="text-xl">Course chapters</h2>
             </div>
+            <ChaptersForm initialData={course} courseId={course.id} />
           </div>
           <div>
             <div className="flex items-center gap-x-2">
